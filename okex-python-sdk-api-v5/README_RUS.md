@@ -58,8 +58,6 @@ loop.run_until_complete(subscribe(url, api_key, passphrase, seceret_key, channel
 loop.run_until_complete(trade(url, api_key, passphrase, seceret_key, trade_param))
 ```
 
-P.S. 
-
 - Для дополнительной информации используйте [официальную документацию ОКЕх](https://www.okex.com/docs-v5/en/)
 
 - Пользователи RestAPI могут использовать параметр `flag` в `example.py` для того, что-бы выбирать режимы трейдинга (демо или реальный)
