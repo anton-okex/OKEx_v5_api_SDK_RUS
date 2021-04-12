@@ -8,7 +8,8 @@ OKEx API 5 Поддержка
 
 # Languages/языки: Java, Python, PHP
 
-| okex-python-sdk-api-v5  | Python |
+| List/Руководство  | Language/Язык |
 | ------------- | ------------- |
 | okex-php-sdk-api-v5  | PHP  |
 | okex-java-sdk-api-v5  | Java  |
+| okex-python-sdk-api-v5  | Python |
