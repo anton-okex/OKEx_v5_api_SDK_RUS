@@ -17,40 +17,38 @@ if __name__ == '__main__':
 
     # account api/аутентификация и общие запросы по пользовательскому счетy
     accountAPI = Account.AccountAPI(api_key, secret_key, passphrase, False, flag)
-    # get balance/баланс счета в BTC
+    # get balance/получить баланс счета в BTC
     result = accountAPI.get_account('BTC')
-    # get positions/позиции счета по BTC-USD фьючерсам 
+    # get positions/получить позиции счета по BTC-USD фьючерсам 
     result = accountAPI.get_positions('FUTURES', 'BTC-USD-210402')
     # Get Account Configuration/конфигурация аккаунта
     result = accountAPI.get_account_config()
-    # Set Position mode/установить режим исполнения позиции
+    # Get Position mode/получить режим исполнения позиции
     result = accountAPI.get_position_mode('long_short_mode')
-    # Set Leverage/установка маржи кредитного плеча [официальную документацию ОКЕх](https://www.okex.com/docs-v5/en/)
+    # Set Leverage/установка маржи кредитного плеча 
     result = accountAPI.set_leverage(instId='BTC-USD-210402', lever='10', mgnMode='cross')
-    # Get Maximum Tradable Size For Instrument
-    # result = accountAPI.get_maximum_trade_size('BTC-USDT-210402', 'cross', 'USDT')
-    # 获取最大可用数量  Get Maximum Available Tradable Amount
-    # result = accountAPI.get_max_avail_size('BTC-USDT-210402', 'isolated', 'BTC')
-    # 调整保证金  Increase/Decrease margint
-    # result = accountAPI.Adjustment_margin('BTC-USDT-210409', 'long', 'add', '100')
-    # 获取杠杆倍数 Get Leverage
-    # result = accountAPI.get_leverage('BTC-USDT-210409', 'isolated')
-    # 获取币币逐仓杠杆最大可借  Get the maximum loan of isolated MARGIN
-    # result = accountAPI.get_max_load('BTC-USDT', 'cross', 'BTC')
-    # 获取当前账户交易手续费费率  Get Fee Rates
-    # result = accountAPI.get_fee_rates('FUTURES', '', category='1')
-    # 获取计息记录  Get interest-accrued
-    # result = accountAPI.get_interest_accrued('BTC-USDT', 'BTC', 'isolated', '', '', '10')
-    # 期权希腊字母PA / BS切换  Set Greeks (PA/BS)
-    # result = accountAPI.set_greeks('BS')
-    # 查看账户最大可转余额  Get Maximum Withdrawals
-    # result = accountAPI.get_max_withdrawal('')
+    # Get Maximum Tradable Size For Instrument/получить максимально возможный размер для выбранного инструмента (фьючерс)  
+    result = accountAPI.get_maximum_trade_size('BTC-USDT-210402', 'cross', 'USDT')
+    # Get Maximum Available Tradable Amount/получить максимально возможную сумму для фьючерсной сделки 
+    result = accountAPI.get_max_avail_size('BTC-USDT-210402', 'isolated', 'BTC')
+    # Increase/Decrease margin/Увеличение/сокращение маржи
+    result = accountAPI.Adjustment_margin('BTC-USDT-210409', 'long', 'add', '100')
+    # Get Leverage/получить маржу кредитного плеча  
+    result = accountAPI.get_leverage('BTC-USDT-210409', 'isolated')
+    # Get the maximum loan of isolated MARGIN/получить максимальную ссуду изолированного кредитного плеча
+    result = accountAPI.get_max_load('BTC-USDT', 'cross', 'BTC')
+    # Get Fee Rates/получить размер комиссий
+    result = accountAPI.get_fee_rates('FUTURES', '', category='1')
+    # Get interest-accrued/получить начисленные проценты
+    result = accountAPI.get_interest_accrued('BTC-USDT', 'BTC', 'isolated', '', '', '10')
+    # Get Maximum Withdrawals/установить максимальный размер выводoв
+    result = accountAPI.get_max_withdrawal('')
 
-    # funding api
+    # funding api/основной аккаунт
     fundingAPI = Funding.FundingAPI(api_key, secret_key, passphrase, False, flag)
-    # 获取充值地址信息  Get Deposit Address
-    # result = fundingAPI.get_deposit_address('')
-    # 获取资金账户余额信息  Get Balance
+    # Get Deposit Address/получить адрес для депозита
+    result = fundingAPI.get_deposit_address('')
+    # Get Balance
     # result = fundingAPI.get_balances('BTC')
     # 资金划转  Funds Transfer
     # result = fundingAPI.funds_transfer(ccy='', amt='', type='1', froms="", to="",subAcct='')
