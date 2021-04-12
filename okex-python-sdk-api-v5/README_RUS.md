@@ -58,13 +58,13 @@ loop.run_until_complete(subscribe(url, api_key, passphrase, seceret_key, channel
 loop.run_until_complete(trade(url, api_key, passphrase, seceret_key, trade_param))
 ```
 
-- Для дополнительной информации используйте [официальную документацию ОКЕх](https://www.okex.com/docs-v5/en/)
+- Для дополнительной информации по API V5 используйте [официальную документацию ОКЕх](https://www.okex.com/docs-v5/en/)
 
 - Пользователи RestAPI могут использовать параметр `flag` в `example.py` для того, что-бы выбирать режимы трейдинга (демо или реальный)
 
 - Пользователи WebSocketAPI могут использовать `url` для того, что-бы выбирать режимы трейдинга (демо или реальный)
 
-- Дополнительная информация для `WebSocketAPI` можно использовать следующие ресурсы:
+- Дополнительная информация для `WebSocketAPI` содержится на следующих ресурсах:
 
   - `asyncio`、`websockets` document/`github`：
 
