@@ -103,14 +103,14 @@ if __name__ == '__main__':
     result = publicAPI.get_opt_summary('BTC-USD')
     # Get Estimated Delivery/Excercise Price/получить цену исполнения (ETH-USD)
     result = publicAPI.get_estimated_price('ETH-USD-210326')
-    # Get Discount Rate And Interest-Free Quota
-    # result = publicAPI.discount_interest_free_quota('')
-    # 获取系统时间  Get System Time
-    # result = publicAPI.get_system_time()
-    # 获取平台公共爆仓单信息  Get Liquidation Orders
-    # result = publicAPI.get_liquidation_orders('FUTURES', uly='BTC-USDT', alias='next_quarter', state='filled')
-    # 获取标记价格  Get Mark Price
-    # result = publicAPI.get_mark_price('FUTURES')
+    # Get Discount Rate And Interest-Free Quota/получить информацию по ставке и беспроцентной квоте
+    result = publicAPI.discount_interest_free_quota('')
+    # Get System Time/системное время
+    result = publicAPI.get_system_time()
+    # Get Liquidation Orders/получить информацию по ликвидационным ордерам (фьючерс, BTC-USDT)
+    result = publicAPI.get_liquidation_orders('FUTURES', uly='BTC-USDT', alias='next_quarter', state='filled')
+    # Get Mark Price/получить информацию по цене отметки инструмента (фьючерс)
+    result = publicAPI.get_mark_price('FUTURES')
 
     # trade api
     tradeAPI = Trade.TradeAPI(api_key, secret_key, passphrase, False, flag)
