@@ -33,11 +33,11 @@ passphrase = "ваша_секретная_фраза"
 
 - RestAPI
   - Запустите `example.py`
-  - Используйте нужные вам методы
+  - Используйте нужные вам команды
 
 - WebSocketAPI
   - Запустите `websocket_example.py`
-  - В зависимости от `public channel`/`private channel`/`trade`, выберете соответствующий `url`, а также нужный вам метод
+  - В зависимости от `public channel`/`private channel`/`trade`, выберете соответствующий `url`, а также нужные вам команды
 
 ```python 
 # WebSocket public channel
