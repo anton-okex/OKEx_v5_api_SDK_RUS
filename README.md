@@ -8,9 +8,10 @@ Complete guide to OKEx’s API V5 / Полный гайд по OKEX API V5 (ан
 
 | Name/Название  | Language/Язык |
 | ------------- | ------------- |
+| okex-python-sdk-api-v5  | Python |
 | okex-php-sdk-api-v5  | PHP  |
 | okex-java-sdk-api-v5  | Java  |
-| okex-python-sdk-api-v5  | Python |
+
 
 # Contact Us / Контакты
 
