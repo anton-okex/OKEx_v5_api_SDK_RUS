@@ -48,22 +48,20 @@ if __name__ == '__main__':
     fundingAPI = Funding.FundingAPI(api_key, secret_key, passphrase, False, flag)
     # Get Deposit Address/получить адрес для депозита
     result = fundingAPI.get_deposit_address('')
-    # Get Balance
-    # result = fundingAPI.get_balances('BTC')
-    # 资金划转  Funds Transfer
-    # result = fundingAPI.funds_transfer(ccy='', amt='', type='1', froms="", to="",subAcct='')
-    # 提币  Withdrawal
-    # result = fundingAPI.coin_withdraw('usdt', '2', '3', '', '', '0')
-    # 充值记录  Get Deposit History
-    # result = fundingAPI.get_deposit_history()
-    # 提币记录  Get Withdrawal History
-    # result = fundingAPI.get_withdrawal_history()
-    # 获取币种列表  Get Currencies
-    # result = fundingAPI.get_currency()
-    # 余币宝申购/赎回  PiggyBank Purchase/Redemption
+    # Get Balance/ получить баланс основного счета в BTC
+    result = fundingAPI.get_balances('BTC')
+    # Funds Transfer/сделать трансфер средств на субсчет
+    result = fundingAPI.funds_transfer(ccy='', amt='', type='1', froms="", to="",subAcct='')
+    # Withdrawal/сделать вывод средств
+    result = fundingAPI.coin_withdraw('usdt', '2', '3', '', '', '0')
+    # Get Deposit History/получить историю депозитов
+    result = fundingAPI.get_deposit_history()
+    # Get Withdrawal History/получить историю выводов
+    result = fundingAPI.get_withdrawal_history()
+    # Get Currencies/получить id валюты
+    result = fundingAPI.get_currency()
+    # PiggyBank Purchase/Redemption/получить выплату/приобрести в OKEx PiggyBank
     # result = fundingAPI.purchase_redempt('BTC', '1', 'purchase')
-    # 资金流水查询  Asset Bills Details
-    # result = fundingAPI.get_bills('USDT', '130')
 
     # market api
     marketAPI = Market.MarketAPI(api_key, secret_key, passphrase, False, flag)
