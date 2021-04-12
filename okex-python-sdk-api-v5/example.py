@@ -112,44 +112,44 @@ if __name__ == '__main__':
     # Get Mark Price/получить информацию по цене отметки инструмента (фьючерс)
     result = publicAPI.get_mark_price('FUTURES')
 
-    # trade api
+    # trade api/торговый API
     tradeAPI = Trade.TradeAPI(api_key, secret_key, passphrase, False, flag)
-    # 下单  Place Order
-    # result = tradeAPI.place_order(instId='BTC-USDT-210326', tdMode='cross', side='sell', posSide='short',
-    #                               ordType='market', sz='100')
-    # 批量下单  Place Multiple Orders
-    # result = tradeAPI.place_multiple_orders([
-    #     {'instId': 'BTC-USD-210402', 'tdMode': 'isolated', 'side': 'buy', 'ordType': 'limit', 'sz': '1', 'px': '17400',
-    #      'posSide': 'long',
-    #      'clOrdId': 'a12344', 'tag': 'test1210'},
-    #     {'instId': 'BTC-USD-210409', 'tdMode': 'isolated', 'side': 'buy', 'ordType': 'limit', 'sz': '1', 'px': '17359',
-    #      'posSide': 'long',
-    #      'clOrdId': 'a12344444', 'tag': 'test1211'}
-    # ])
+    # Place Order/поставить ордер 
+    result = tradeAPI.place_order(instId='BTC-USDT-210326', tdMode='cross', side='sell', posSide='short',
+                                    ordType='market', sz='100')
+    # Place Multiple Orders/поставить несколько ордеров
+    result = tradeAPI.place_multiple_orders([
+          {'instId': 'BTC-USD-210402', 'tdMode': 'isolated', 'side': 'buy', 'ordType': 'limit', 'sz': '1', 'px': '17400',
+           'posSide': 'long',
+           'clOrdId': 'a12344', 'tag': 'test1210'},
+          {'instId': 'BTC-USD-210409', 'tdMode': 'isolated', 'side': 'buy', 'ordType': 'limit', 'sz': '1', 'px': '17359',
+           'posSide': 'long',
+           'clOrdId': 'a12344444', 'tag': 'test1211'}
+      ])
 
-    # 撤单  Cancel Order
-    # result = tradeAPI.cancel_order('BTC-USD-201225', '257164323454332928')
-    # 批量撤单  Cancel Multiple Orders
-    # result = tradeAPI.cancel_multiple_orders([
-    #     {"instId": "BTC-USD-210402", "ordId": "297389358169071616"},
-    #     {"instId": "BTC-USD-210409", "ordId": "297389358169071617"}
-    # ])
+    # Cancel Order/oтменить ордер
+    result = tradeAPI.cancel_order('BTC-USD-201225', '257164323454332928')
+    # Cancel Multiple Orders/oтменить несколько ордеров
+    result = tradeAPI.cancel_multiple_orders([
+          {"instId": "BTC-USD-210402", "ordId": "297389358169071616"},
+          {"instId": "BTC-USD-210409", "ordId": "297389358169071617"}
+      ])
 
-    # 修改订单  Amend Order
-    # result = tradeAPI.amend_order()
-    # 批量修改订单  Amend Multiple Orders
-    # result = tradeAPI.amend_multiple_orders(
-    #     [{'instId': 'BTC-USD-201225', 'cxlOnFail': 'false', 'ordId': '257551616434384896', 'newPx': '17880'},
-    #      {'instId': 'BTC-USD-201225', 'cxlOnFail': 'false', 'ordId': '257551616652488704', 'newPx': '17882'}
-    #      ])
+    # Amend Order/изменить ордер
+    result = tradeAPI.amend_order()
+    #   Amend Multiple Orders/изменить несколько ордеров
+    result = tradeAPI.amend_multiple_orders(
+          [{'instId': 'BTC-USD-201225', 'cxlOnFail': 'false', 'ordId': '257551616434384896', 'newPx': '17880'},
+           {'instId': 'BTC-USD-201225', 'cxlOnFail': 'false', 'ordId': '257551616652488704', 'newPx': '17882'}
+           ])
 
-    # 市价仓位全平  Close Positions
-    # result = tradeAPI.close_positions('BTC-USDT-210409', 'isolated', 'long', '')
-    # 获取订单信息  Get Order Details
-    # result = tradeAPI.get_orders('BTC-USD-201225', '257173039968825345')
-    # 获取未成交订单列表  Get Order List
-    # result = tradeAPI.get_order_list()
-    # 获取历史订单记录（近七天） Get Order History (last 7 days）
+    # Close Positions/закрыть позицию
+    result = tradeAPI.close_positions('BTC-USDT-210409', 'isolated', 'long', '')
+    # Get Order Details/получить информацию по конкретному ордеру
+    result = tradeAPI.get_orders('BTC-USD-201225', '257173039968825345')
+    # Get Order List/получить список ордеров
+    result = tradeAPI.get_order_list()
+    # Get Order History (last 7 days）
     # result = tradeAPI.get_orders_history('FUTURES')
     # 获取历史订单记录（近三个月） Get Order History (last 3 months)
     # result = tradeAPI.orders_history_archive('FUTURES')
