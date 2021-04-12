@@ -19,6 +19,6 @@ OKEx API Telegram English Group / Телеграм группа по OKEX API н
 
 OKEx API support bot Russian / Телеграм bot по OKEX API на русском языке: [@V5_API_support_bot](https://t.me/V5_API_support_bot)
 
-OKEx API Announcements English / Группа объявлений по OKEX API на англ языке: [@OKEx_APIannouncements](https://t.me/OKEx_APIannouncements)
+OKEx API Announcements English / Телеграм группа объявлений по OKEX API на англ языке: [@OKEx_APIannouncements](https://t.me/OKEx_APIannouncements)
 
-OKEx Support Center / поддержка: [Help center](https://www.okex.com/support-center.html)  
+OKEx Support Center / OKEx поддержка: [Help center](https://www.okex.com/support-center.html)  
