@@ -1,3 +1,6 @@
+# Code examples for the OKEx V5 API
+# Примеры команд для OKEx V5 API
+
 import okex.Account_api as Account
 import okex.Funding_api as Funding
 import okex.Market_api as Market
@@ -13,13 +16,13 @@ if __name__ == '__main__':
     passphrase = "your_passphrase/ваша_секретная_фраза"
     # параметр flag используется для переключения между демо и реальным режимом
     # flag = '1'  #демо-режим
-    flag = '0'  
+    flag = '0'  #реальн
 
     # account api/аутентификация и общие запросы по пользовательскому счетy
     accountAPI = Account.AccountAPI(api_key, secret_key, passphrase, False, flag)
     # get balance/получить баланс счета в BTC
     result = accountAPI.get_account('BTC')
-    # get positions/получить позиции счета по BTC-USD фьючерсам 
+    # get positions/получить позиции счета (BTC-USD, фьючерс)
     result = accountAPI.get_positions('FUTURES', 'BTC-USD-210402')
     # Get Account Configuration/конфигурация аккаунта
     result = accountAPI.get_account_config()
@@ -37,9 +40,9 @@ if __name__ == '__main__':
     result = accountAPI.get_leverage('BTC-USDT-210409', 'isolated')
     # Get the maximum loan of isolated MARGIN/получить максимальную ссуду изолированного кредитного плеча
     result = accountAPI.get_max_load('BTC-USDT', 'cross', 'BTC')
-    # Get Fee Rates/получить размер комиссий
+    # Get Fee Rates/получить размер комиссий (фьючерс)
     result = accountAPI.get_fee_rates('FUTURES', '', category='1')
-    # Get interest-accrued/получить начисленные проценты
+    # Get interest-accrued/получить начисленные проценты (BTC-USDT)
     result = accountAPI.get_interest_accrued('BTC-USDT', 'BTC', 'isolated', '', '', '10')
     # Get Maximum Withdrawals/установить максимальный размер выводoв
     result = accountAPI.get_max_withdrawal('')
@@ -48,11 +51,11 @@ if __name__ == '__main__':
     fundingAPI = Funding.FundingAPI(api_key, secret_key, passphrase, False, flag)
     # Get Deposit Address/получить адрес для депозита
     result = fundingAPI.get_deposit_address('')
-    # Get Balance/ получить баланс основного счета в BTC
+    # Get Balance/ получить баланс основного счета (в BTC)
     result = fundingAPI.get_balances('BTC')
     # Funds Transfer/сделать трансфер средств на субсчет
     result = fundingAPI.funds_transfer(ccy='', amt='', type='1', froms="", to="",subAcct='')
-    # Withdrawal/сделать вывод средств
+    # Withdrawal/сделать вывод средств (USDT)
     result = fundingAPI.coin_withdraw('usdt', '2', '3', '', '', '0')
     # Get Deposit History/получить историю депозитов
     result = fundingAPI.get_deposit_history()
@@ -61,48 +64,46 @@ if __name__ == '__main__':
     # Get Currencies/получить id валюты
     result = fundingAPI.get_currency()
     # PiggyBank Purchase/Redemption/получить выплату/приобрести в OKEx PiggyBank
-    # result = fundingAPI.purchase_redempt('BTC', '1', 'purchase')
+    result = fundingAPI.purchase_redempt('BTC', '1', 'purchase')
 
-    # market api
+    # market api/рыночный API
     marketAPI = Market.MarketAPI(api_key, secret_key, passphrase, False, flag)
-    # 获取所有产品行情信息  Get Tickers
-    # result = marketAPI.get_tickers('SPOT')
-    # 获取单个产品行情信息  Get Ticker
-    # result = marketAPI.get_ticker('BTC-USDT')
-    # 获取指数行情  Get Index Tickers
-    # result = marketAPI.get_index_ticker('BTC', 'BTC-USD')
-    # 获取产品深度  Get Order Book
-    # result = marketAPI.get_orderbook('BTC-USDT-210402', '400')
-    # 获取所有交易产品K线数据  Get Candlesticks
-    # result = marketAPI.get_candlesticks('BTC-USDT-210924', bar='1m')
-    # 获取交易产品历史K线数据（仅主流币实盘数据）  Get Candlesticks History（top currencies in real-trading only）
-    # result = marketAPI.get_history_candlesticks('BTC-USDT')
-    # 获取指数K线数据  Get Index Candlesticks
-    # result = marketAPI.get_index_candlesticks('BTC-USDT')
-    # 获取标记价格K线数据  Get Mark Price Candlesticks
-    # result = marketAPI.get_markprice_candlesticks('BTC-USDT')
-    # 获取交易产品公共成交数据  Get Trades
-    # result = marketAPI.get_trades('BTC-USDT', '400')
+    # Get Tickers/получить ВСЕ тикеры валют на спот рынке
+    result = marketAPI.get_tickers('SPOT')
+    # Get Ticker/получить тикер пары (BTC-USDT)
+    result = marketAPI.get_ticker('BTC-USDT')
+    # Get Index Tickers/получить индексный тикер в паре (BTC-USDT)
+    result = marketAPI.get_index_ticker('BTC', 'BTC-USD')
+    # Get Order Book/получить информацию по OrderBook (BTC-USDT)
+    result = marketAPI.get_orderbook('BTC-USDT-210402', '400')
+    # Get Candlesticks/получить информацию по свечам (BTC-USDT)
+    result = marketAPI.get_candlesticks('BTC-USDT-210924', bar='1m')
+    # Get Candlesticks History（top currencies in real-trading only/получить историю по свечам (недоступно в демо-режиме)
+    result = marketAPI.get_history_candlesticks('BTC-USDT')
+    # Get Index Candlesticks/получить информацию по свечам (индекс)
+    result = marketAPI.get_index_candlesticks('BTC-USDT')
+    # Get Trades/получить информацию по сделкам (BTC-USDT, 400)
+    result = marketAPI.get_trades('BTC-USDT', '400')
 
-    # public api
+    # public api/публичный API
     publicAPI = Public.PublicAPI(api_key, secret_key, passphrase, False, flag)
-    # 获取交易产品基础信息  Get instrument
-    # result = publicAPI.get_instruments('FUTURES', 'BTC-USDT')
-    # 获取交割和行权记录  Get Delivery/Exercise History
-    # result = publicAPI.get_deliver_history('FUTURES', 'BTC-USD')
-    # 获取持仓总量  Get Open Interest
-    # result = publicAPI.get_open_interest('SWAP')
-    # 获取永续合约当前资金费率  Get Funding Rate
-    # result = publicAPI.get_funding_rate('BTC-USD-SWAP')
-    # 获取永续合约历史资金费率  Get Funding Rate History
-    # result = publicAPI.funding_rate_history('BTC-USD-SWAP')
-    # 获取限价  Get Limit Price
-    # result = publicAPI.get_price_limit('BTC-USD-210402')
-    # 获取期权定价  Get Option Market Data
-    # result = publicAPI.get_opt_summary('BTC-USD')
-    # 获取预估交割/行权价格  Get Estimated Delivery/Excercise Price
-    # result = publicAPI.get_estimated_price('ETH-USD-210326')
-    # 获取免息额度和币种折算率  Get Discount Rate And Interest-Free Quota
+    # Get instrument/получить информацию по трейдинговому инструменту (фьючерс, BTC-USDT)
+    result = publicAPI.get_instruments('FUTURES', 'BTC-USDT')
+    # Get Delivery/Exercise History/получить историю по инструменту/паре (фьючерс, BTC-USDT)
+    result = publicAPI.get_deliver_history('FUTURES', 'BTC-USD')
+    # Get Open Interest/получить информацию по открытым позициям (своп)
+    result = publicAPI.get_open_interest('SWAP')
+    # Get Funding Rate/получить информацию по текущей ставке (BTC-USDT, своп)
+    result = publicAPI.get_funding_rate('BTC-USD-SWAP')
+    # Get Funding Rate History/получить информацию по истории ставки (BTC-USDT, своп)
+    result = publicAPI.funding_rate_history('BTC-USD-SWAP')
+    # Get Limit Price/получить цену лимита (BTC-USDT)
+    result = publicAPI.get_price_limit('BTC-USD-210402')
+    # Get Option Market Data/получить рыночные данные по опционам (BTC-USD)
+    result = publicAPI.get_opt_summary('BTC-USD')
+    # Get Estimated Delivery/Excercise Price/получить цену исполнения (ETH-USD)
+    result = publicAPI.get_estimated_price('ETH-USD-210326')
+    # Get Discount Rate And Interest-Free Quota
     # result = publicAPI.discount_interest_free_quota('')
     # 获取系统时间  Get System Time
     # result = publicAPI.get_system_time()
