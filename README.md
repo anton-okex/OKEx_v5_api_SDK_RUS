@@ -14,12 +14,10 @@ Complete guide to OKEx’s API V5 / Полный гайд по OKEX API V5 (ан
 
 # Contact Us / Контакты
 
-OKEx API Telegram English Group / Телеграм группа на aнглийском языке: [@OKExAPI](https://t.me/OKExAPI)
+OKEx API Telegram English Group / Телеграм группа по OKEX API на aнглийском языке: [@OKExAPI](https://t.me/OKExAPI)
 
-OKEx API support bot Russian / API Телеграм bot на русском языке: [@V5_API_support_bot](https://t.me/V5_API_support_bot)
+OKEx API support bot Russian / Телеграм bot по OKEX API на русском языке: [@V5_API_support_bot](https://t.me/V5_API_support_bot)
 
-OKEx API Announcements English / Группа API объявлений на англ языке: [@OKEx_APIannouncements](https://t.me/OKEx_APIannouncements)
-
-OKEx API support Russian / Телеграм bot на русском языке: [@V5_API_support_bot](https://t.me/V5_API_support_bot)
+OKEx API Announcements English / Группа объявлений по OKEX API на англ языке: [@OKEx_APIannouncements](https://t.me/OKEx_APIannouncements)
 
 OKEx Support Center / поддержка: [Help center](https://www.okex.com/support-center.html)  
