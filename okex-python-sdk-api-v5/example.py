@@ -8,30 +8,26 @@ import okex.status_api as Status
 import json
 
 if __name__ == '__main__':
-    api_key = ""
-    secret_key = ""
-    passphrase = ""
-    # flag是实盘与模拟盘的切换参数
-    # flag = '1'  # 模拟盘
-    flag = '0'  # 实盘
+    api_key = "your_API_key/ваш_API_ключ"
+    secret_key = "your_secret_key/ваш_секретный_ключ"
+    passphrase = "your_passphrase/ваша_секретная_фраза"
+    # параметр flag используется для переключения между демо и реальным режимом
+    # flag = '1'  #демо-режим
+    flag = '0'  
 
-    # account api
+    # account api/аутентификация и общие запросы по пользовательскому счетy
     accountAPI = Account.AccountAPI(api_key, secret_key, passphrase, False, flag)
-    # 查看账户余额  Get Balance
-    # result = accountAPI.get_account('BTC')
-    # 查看持仓信息  Get Positions
-    # result = accountAPI.get_positions('FUTURES', 'BTC-USD-210402')
-    # 账单流水查询（近七天） Get Bills Details (recent 7 days)
-    # result = accountAPI.get_bills_detail('FUTURES', 'BTC','cross')
-    # 账单流水查询（近三个月） Get Bills Details (recent 3 months)
-    # result = accountAPI.get_bills_details('FUTURES', 'BTC','cross')
-    # 查看账户配置  Get Account Configuration
-    # result = accountAPI.get_account_config()
-    # 设置持仓模式  Set Position mode
-    # result = accountAPI.get_position_mode('long_short_mode')
-    # 设置杠杆倍数  Set Leverage
-    # result = accountAPI.set_leverage(instId='BTC-USD-210402', lever='10', mgnMode='cross')
-    # 获取最大可交易数量  Get Maximum Tradable Size For Instrument
+    # get balance/баланс счета в BTC
+    result = accountAPI.get_account('BTC')
+    # get positions/позиции счета по BTC-USD фьючерсам 
+    result = accountAPI.get_positions('FUTURES', 'BTC-USD-210402')
+    # Get Account Configuration/конфигурация аккаунта
+    result = accountAPI.get_account_config()
+    # Set Position mode/установить режим исполнения позиции
+    result = accountAPI.get_position_mode('long_short_mode')
+    # Set Leverage/установка маржи кредитного плеча [официальную документацию ОКЕх](https://www.okex.com/docs-v5/en/)
+    result = accountAPI.set_leverage(instId='BTC-USD-210402', lever='10', mgnMode='cross')
+    # Get Maximum Tradable Size For Instrument
     # result = accountAPI.get_maximum_trade_size('BTC-USDT-210402', 'cross', 'USDT')
     # 获取最大可用数量  Get Maximum Available Tradable Amount
     # result = accountAPI.get_max_avail_size('BTC-USDT-210402', 'isolated', 'BTC')
