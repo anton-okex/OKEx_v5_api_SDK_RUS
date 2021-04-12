@@ -48,13 +48,13 @@ url = "wss://ws.okex.com:8443/ws/v5/private?brokerId=9999"
 ```
 
 ```Python
-# Для public channel аутентификация не требуется  （Instrument, Tickers, Index, Mark price, Order Book, Funding rate, etc）
+# Для public channel аутентификация не требуется  （Instrument, Tickers, Index, Mark price, Order Book, Funding rate, и т.д.）
 loop.run_until_complete(subscribe_without_login(url, channels))
 
-# Для private channel аутентификация необходимa（Account,Positions, Order, etc）
+# Для private channel аутентификация необходимa（Account,Positions, Order, и т.д.）
 loop.run_until_complete(subscribe(url, api_key, passphrase, seceret_key, channels))
 
-# Трейдинг（Place Order, Cancel Order, Amend Order, etc）
+# Трейдинг（Place Order, Cancel Order, Amend Order, и т.д.）
 loop.run_until_complete(trade(url, api_key, passphrase, seceret_key, trade_param))
 ```
 
