@@ -4,7 +4,7 @@ OKEx API V5 Поддержка
 
 | Contacts  | Контакты |
 | ------------- | ------------- |
-| Telegram: @bot  | Telegram: @bot  |
+| Telegram: @V5_API_support_bot  | Телеграм: @V5_API_support_bot  |
 
 # Languages/языки: Java, Python, PHP
 
