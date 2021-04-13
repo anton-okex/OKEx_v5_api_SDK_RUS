@@ -21,7 +21,7 @@ pip install websockets==6.0
 
 2.1 If you have no API，[Click here](https://www.okex.com/account/users/myApi) to the official websit to apply for the API
 
-2.2 Fill out all necessary informatiuon in `example.py（RestAPI）`  and `websocket_example.py（WebSocketAPI）`
+2.2 Fill out all necessary informatiuon in `REST_examples.py（RestAPI）`  and `websocket_examples.py（WebSocketAPI）`
 
 ```python 
 api_key = ""
@@ -32,10 +32,10 @@ passphrase = ""
 #### Step 3: Call API 
 
 - RestAPI
-  - Run `example.py`
+  - Run `REST_examples.py`
   - Uncomment the corresponding method and then pass the arguments and call the interfaces
 - WebSocketAPI
-  - Run `websocket_example.py`
+  - Run `websocket_examples.py`
   - According to the `public channel`/`private channel`/`trade`, select the corresponding `url`, the corresponding start method, and pass in the corresponding parameters
 
 ```python 
