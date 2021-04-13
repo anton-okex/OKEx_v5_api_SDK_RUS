@@ -1,5 +1,5 @@
-# Code examples for the OKEx V5 API
-# Примеры команд для OKEx V5 API
+# Code examples for the OKEx V5 API (REST)
+# Примеры команд для OKEx V5 API (REST)
 
 import okex.Account_api as Account
 import okex.Funding_api as Funding
