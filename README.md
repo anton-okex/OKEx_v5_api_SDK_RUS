@@ -12,13 +12,13 @@ Complete guide to OKEx’s API V5 / Полный гайд по OKEX API V5 (ан
 
 Other unofficial SDK for the OKEx V5 API in English and Chinese / Другой неофициальный на англ и китайском языках: [OKEx API V5 SDK](https://github.com/jane-cloud/Open-API-SDK-V5)
 
-## Languages/языки: Java, Python, PHP
+## Languages/языки: Python, Java, PHP
 
 | Name/Название  | Language/Язык |
 | ------------- | ------------- |
 | okex-python-sdk-api-v5  | Python |
-| okex-php-sdk-api-v5  | PHP  |
-| okex-java-sdk-api-v5  | Java  |
+| to be added/будет добавлен  | C#  |
+| to be added/будет добавлен  | Java  |
 
 
 ## Contact Us / Контакты
