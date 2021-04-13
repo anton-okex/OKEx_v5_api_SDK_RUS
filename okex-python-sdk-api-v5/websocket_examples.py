@@ -1,3 +1,6 @@
+# Code examples for the OKEx V5 API (websockets)
+# Примеры команд для OKEx V5 API (websockets)
+
 import asyncio
 import websockets
 import json
@@ -8,13 +11,13 @@ import zlib
 import datetime
 import time
 
-
+# format the timestamp/форматирование timestamp
 def get_timestamp():
     now = datetime.datetime.now()
     t = now.isoformat("T", "milliseconds")
     return t + "Z"
 
-
+# server time/время сервер 
 def get_server_time():
     url = "https://www.okex.com/api/v5/public/time"
     response = requests.get(url)
@@ -22,12 +25,11 @@ def get_server_time():
         return response.json()['data'][0]['ts']
     else:
         return ""
-
-
+    
 def get_local_timestamp():
     return int(time.time())
 
-
+# login/аутентификация
 def login_params(timestamp, api_key, passphrase, secret_key):
     message = timestamp + 'GET' + '/users/self/verify'
 
@@ -42,25 +44,17 @@ def login_params(timestamp, api_key, passphrase, secret_key):
     login_str = json.dumps(login_param)
     return login_str
 
-
+# bids & asks data/данные по bids & asks
 def partial(res):
     data_obj = res['data'][0]
     bids = data_obj['bids']
     asks = data_obj['asks']
     instrument_id = res['arg']['instId']
-    # print('全量数据bids为：' + str(bids))
-    # print('档数为：' + str(len(bids)))
-    # print('全量数据asks为：' + str(asks))
-    # print('档数为：' + str(len(asks)))
     return bids, asks, instrument_id
 
-
+#modify & update bids/изменение bids
 def update_bids(res, bids_p):
-    # 获取增量bids数据
     bids_u = res['data'][0]['bids']
-    # print('增量数据bids为：' + str(bids_u))
-    # print('档数为：' + str(len(bids_u)))
-    # bids合并
     for i in bids_u:
         bid_price = i[0]
         for j in bids_p:
@@ -80,13 +74,10 @@ def update_bids(res, bids_p):
         # print('合并后的bids为：' + str(bids_p) + '，档数为：' + str(len(bids_p)))
     return bids_p
 
-
+#modify & update asks/изменение asks
 def update_asks(res, asks_p):
     # 获取增量asks数据
     asks_u = res['data'][0]['asks']
-    # print('增量数据asks为：' + str(asks_u))
-    # print('档数为：' + str(len(asks_u)))
-    # asks合并
     for i in asks_u:
         ask_price = i[0]
         for j in asks_p:
@@ -103,7 +94,6 @@ def update_asks(res, asks_p):
                 asks_p.append(i)
     else:
         asks_p.sort(key=lambda price: sort_num(price[0]))
-        # print('合并后的asks为：' + str(asks_p) + '，档数为：' + str(len(asks_p)))
     return asks_p
 
 
@@ -113,9 +103,8 @@ def sort_num(n):
     else:
         return float(n)
 
-
+# get the bids & asks file/получить список bids & asks
 def check(bids, asks):
-    # 获取bid档str
     bids_l = []
     bid_l = []
     count_bid = 1
@@ -127,7 +116,6 @@ def check(bids, asks):
     for j in bids_l:
         str_bid = ':'.join(j[0 : 2])
         bid_l.append(str_bid)
-    # 获取ask档str
     asks_l = []
     ask_l = []
     count_ask = 1
@@ -139,19 +127,16 @@ def check(bids, asks):
     for k in asks_l:
         str_ask = ':'.join(k[0 : 2])
         ask_l.append(str_ask)
-    # 拼接str
     num = ''
     if len(bid_l) == len(ask_l):
         for m in range(len(bid_l)):
             num += bid_l[m] + ':' + ask_l[m] + ':'
     elif len(bid_l) > len(ask_l):
-        # bid档比ask档多
         for n in range(len(ask_l)):
             num += bid_l[n] + ':' + ask_l[n] + ':'
         for l in range(len(ask_l), len(bid_l)):
             num += bid_l[l] + ':'
     elif len(bid_l) < len(ask_l):
-        # ask档比bid档多
         for n in range(len(bid_l)):
             num += bid_l[n] + ':' + ask_l[n] + ':'
         for l in range(len(bid_l), len(ask_l)):
@@ -172,7 +157,7 @@ def change(num_old):
     return out
 
 
-# subscribe channels un_need login
+# subscribe channels without login/подписаться на каналы без аутентификации
 async def subscribe_without_login(url, channels):
     l = []
     while True:
@@ -193,7 +178,7 @@ async def subscribe_without_login(url, channels):
                             print(res)
                             continue
                         except Exception as e:
-                            print("连接关闭，正在重连……")
+                            print("Соединение закрыто, переподключение")
                             break
 
                     print(get_timestamp() + res)
@@ -202,12 +187,10 @@ async def subscribe_without_login(url, channels):
                         continue
                     for i in res['arg']:
                         if 'books' in res['arg'][i] and 'books5' not in res['arg'][i]:
-                            # 订阅频道是深度频道
                             if res['action'] == 'snapshot':
                                 for m in l:
                                     if res['arg']['instId'] == m['instrument_id']:
                                         l.remove(m)
-                                # 获取首次全量深度数据
                                 bids_p, asks_p, instrument_id = partial(res)
                                 d = {}
                                 d['instrument_id'] = instrument_id
@@ -215,19 +198,16 @@ async def subscribe_without_login(url, channels):
                                 d['asks_p'] = asks_p
                                 l.append(d)
 
-                                # 校验checksum
+                                # checksum/контрольные суммы
                                 checksum = res['data'][0]['checksum']
-                                # print('推送数据的checksum为：' + str(checksum))
                                 check_num = check(bids_p, asks_p)
-                                # print('校验后的checksum为：' + str(check_num))
                                 if check_num == checksum:
-                                    print("校验结果为：True")
+                                    print("Проверка_checksum：True")
                                 else:
-                                    print("校验结果为：False，正在重新订阅……")
+                                    print("Проверка_checksum：False，повторная_попытка...")
 
-                                    # 取消订阅
+                                    # cancel subscription/отменить подписку
                                     await unsubscribe_without_login(url, channels)
-                                    # 发送订阅
                                     async with websockets.connect(url) as ws:
                                         sub_param = {"op": "subscribe", "args": channels}
                                         sub_str = json.dumps(sub_param)
@@ -237,42 +217,40 @@ async def subscribe_without_login(url, channels):
                             elif res['action'] == 'update':
                                 for j in l:
                                     if res['arg']['instId'] == j['instrument_id']:
-                                        # 获取全量数据
+                                        # full data/получить полные данные
                                         bids_p = j['bids_p']
                                         asks_p = j['asks_p']
-                                        # 获取合并后数据
                                         bids_p = update_bids(res, bids_p)
                                         asks_p = update_asks(res, asks_p)
 
-                                        # 校验checksum
+                                        # checksum/контрольные суммы
                                         checksum = res['data'][0]['checksum']
-                                        # print('推送数据的checksum为：' + str(checksum))
+                                        # print('checksum/контрольные суммы：' + str(checksum))
                                         check_num = check(bids_p, asks_p)
-                                        # print('校验后的checksum为：' + str(check_num))
+                                        # print('checksum/контрольные суммы после проверки：' + str(check_num))
                                         if check_num == checksum:
-                                            print("校验结果为：True")
+                                            print("Проверка_checksum：True")
                                         else:
-                                            print("校验结果为：False，正在重新订阅……")
+                                            print("Проверка_checksum：False，повторная_попыткa...")
 
-                                            # 取消订阅
+                                            # cancel subscription/отменить подписку
                                             await unsubscribe_without_login(url, channels)
-                                            # 发送订阅
                                             async with websockets.connect(url) as ws:
                                                 sub_param = {"op": "subscribe", "args": channels}
                                                 sub_str = json.dumps(sub_param)
                                                 await ws.send(sub_str)
                                                 print(f"send: {sub_str}")
         except Exception as e:
-            print("连接断开，正在重连……")
+            print("соединение прервано，повторное подключение...")
             continue
 
 
-# subscribe channels need login
+# subscribe channels with login/подписаться на каналы с аутентификацией
 async def subscribe(url, api_key, passphrase, secret_key, channels):
     while True:
         try:
             async with websockets.connect(url) as ws:
-                # login
+                # login/аутентификация
                 timestamp = str(get_local_timestamp())
                 login_str = login_params(timestamp, api_key, passphrase, secret_key)
                 await ws.send(login_str)
@@ -280,7 +258,7 @@ async def subscribe(url, api_key, passphrase, secret_key, channels):
                 res = await ws.recv()
                 print(res)
 
-                # subscribe
+                # subscribe/подписаться
                 sub_param = {"op": "subscribe", "args": channels}
                 sub_str = json.dumps(sub_param)
                 await ws.send(sub_str)
@@ -296,17 +274,17 @@ async def subscribe(url, api_key, passphrase, secret_key, channels):
                             print(res)
                             continue
                         except Exception as e:
-                            print("连接关闭，正在重连……")
+                            print("соединение закрыто，повторное подключение...")
                             break
 
                     print(get_timestamp() + res)
 
         except Exception as e:
-            print("连接断开，正在重连……")
+            print("соединение прервано，повторное подключение...")
             continue
 
 
-# trade
+# trade/торговый API
 async def trade(url, api_key, passphrase, secret_key, trade_param):
     while True:
         try:
@@ -319,7 +297,7 @@ async def trade(url, api_key, passphrase, secret_key, trade_param):
                 res = await ws.recv()
                 print(res)
 
-                # trade
+                
                 sub_str = json.dumps(trade_param)
                 await ws.send(sub_str)
                 print(f"send: {sub_str}")
@@ -334,20 +312,20 @@ async def trade(url, api_key, passphrase, secret_key, trade_param):
                             print(res)
                             continue
                         except Exception as e:
-                            print("连接关闭，正在重连……")
+                            print("соединение закрыто，повторное подключение...")
                             break
 
                     print(get_timestamp() + res)
 
         except Exception as e:
-            print("连接断开，正在重连……")
+            print("соединение прервано，повторное подключение...")
             continue
 
 
-# unsubscribe channels
+# unsubscribe channels/отменить подписку
 async def unsubscribe(url, api_key, passphrase, secret_key, channels):
     async with websockets.connect(url) as ws:
-        # login
+        # login/аутентификация
         timestamp = str(get_local_timestamp())
         login_str = login_params(timestamp, api_key, passphrase, secret_key)
         await ws.send(login_str)
@@ -356,7 +334,7 @@ async def unsubscribe(url, api_key, passphrase, secret_key, channels):
         res = await ws.recv()
         print(f"recv: {res}")
 
-        # unsubscribe
+        # unsubscribe/отменить подписку
         sub_param = {"op": "unsubscribe", "args": channels}
         sub_str = json.dumps(sub_param)
         await ws.send(sub_str)
@@ -366,10 +344,9 @@ async def unsubscribe(url, api_key, passphrase, secret_key, channels):
         print(f"recv: {res}")
 
 
-# unsubscribe channels
+# unsubscribe channels/отменить подписку
 async def unsubscribe_without_login(url, channels):
     async with websockets.connect(url) as ws:
-        # unsubscribe
         sub_param = {"op": "unsubscribe", "args": channels}
         sub_str = json.dumps(sub_param)
         await ws.send(sub_str)
@@ -379,60 +356,50 @@ async def unsubscribe_without_login(url, channels):
         print(f"recv: {res}")
 
 
-api_key = ""
-secret_key = ""
-passphrase = ""
+api_key = "your_API_key/ваш_API_ключ"
+secret_key = "your_secret_key/ваш_секретный_ключ"
+passphrase = "your_passphrase/ваша_секретная_фраза"
 
 
-# WebSocket公共频道
-# 实盘
-# url = "wss://ws.okex.com:8443/ws/v5/public"
-# 模拟盘
+# WebSocket public/публичный WebSocket
 # url = "wss://ws.okex.com:8443/ws/v5/public?brokerId=9999"
 
-# WebSocket私有频道
-# 实盘
-# url = "wss://ws.okex.com:8443/ws/v5/private"
-# 模拟盘
+# WebSocket private/частный WebSocket
 # url = "wss://ws.okex.com:8443/ws/v5/private?brokerId=9999"
 
 '''
-公共频道
-:param channel: 频道名
-:param instType: 产品类型
-:param instId: 产品ID
-:param uly: 合约标的指数
+channel parametres/параметры канала
+:param channel: channel name/название канала
+:param instType: instrument type/тип инструмента
+:param instId: instrument id/id инструмента
+:param uly: base contract index/базовый индекс контракта
 
 '''
 
-# 产品频道
-# channels = [{"channel": "instruments", "instType": "FUTURES"}]
-# 行情频道
-# channels = [{"channel": "tickers", "instId": "BTC-USD-210326"}]
-# 持仓总量频道
-# channels = [{"channel": "open-interest", "instId": "BTC-USD-210326"}]
-# K线频道
-# channels = [{"channel": "candle1m", "instId": "BTC-USD-210326"}]
-# 交易频道
-# channels = [{"channel": "trades", "instId": "BTC-USD-201225"}]
-# 预估交割/行权价格频道
-# channels = [{"channel": "estimated-price", "instType": "FUTURES", "uly": "BTC-USD"}]
-# 标记价格频道
-# channels = [{"channel": "mark-price", "instId": "BTC-USDT-210326"}]
-# 标记价格K线频道
-# channels = [{"channel": "mark-price-candle1D", "instId": "BTC-USD-201225"}]
-# 限价频道
-# channels = [{"channel": "price-limit", "instId": "BTC-USD-201225"}]
-# 深度频道
-# channels = [{"channel": "books", "instId": "BTC-USD-SWAP"}]
-# 期权定价频道
-# channels = [{"channel": "opt-summary", "uly": "BTC-USD"}]
-# 资金费率频道
-# channels = [{"channel": "funding-rate", "instId": "BTC-USD-SWAP"}]
-# 指数K线频道
-# channels = [{"channel": "index-candle1m", "instId": "BTC-USDT"}]
-# 指数行情频道
-# channels = [{"channel": "index-tickers", "instId": "BTC-USDT"}]
+# instrument/получить информацию по инструменту (фьючерс)
+channels = [{"channel": "instruments", "instType": "FUTURES"}]
+# tickers/получить информацию по тикеру
+channels = [{"channel": "tickers", "instId": "BTC-USD-210326"}]
+# open-interest/получить информацию по открытым позициям 
+channels = [{"channel": "open-interest", "instId": "BTC-USD-210326"}]
+# candlesticks/получить информацию по свечам 
+channels = [{"channel": "candle1m", "instId": "BTC-USD-210326"}]
+# trades/получить информацию по сделкам
+channels = [{"channel": "trades", "instId": "BTC-USD-201225"}]
+# estimated price/получить цену исполнения 
+channels = [{"channel": "estimated-price", "instType": "FUTURES", "uly": "BTC-USD"}]
+# mark price/получить информацию по цене отметки инструмента
+channels = [{"channel": "mark-price", "instId": "BTC-USDT-210326"}]
+# price limit/получить цену лимита
+channels = [{"channel": "price-limit", "instId": "BTC-USD-201225"}]
+# options data/получить рыночные данные по опционам
+channels = [{"channel": "opt-summary", "uly": "BTC-USD"}]
+# funding rate/получить информацию по текущей ставке
+channels = [{"channel": "funding-rate", "instId": "BTC-USD-SWAP"}]
+# index candlesticks/получить информацию по свечам (индекс)
+channels = [{"channel": "index-candle1m", "instId": "BTC-USDT"}]
+# index tickers/получить индексный тикер в паре (BTC-USDT)
+channels = [{"channel": "index-tickers", "instId": "BTC-USDT"}]
 
 '''
 私有频道
