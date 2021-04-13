@@ -149,42 +149,42 @@ if __name__ == '__main__':
     result = tradeAPI.get_orders('BTC-USD-201225', '257173039968825345')
     # Get Order List/получить список ордеров
     result = tradeAPI.get_order_list()
-    # Get Order History (last 7 days）
-    # result = tradeAPI.get_orders_history('FUTURES')
-    # 获取历史订单记录（近三个月） Get Order History (last 3 months)
-    # result = tradeAPI.orders_history_archive('FUTURES')
-    # 获取成交明细  Get Transaction Details
-    # result = tradeAPI.get_fills()
-    # 策略委托下单  Place Algo Order
-    # result = tradeAPI.place_algo_order('BTC-USDT-210409', 'isolated', 'buy', ordType='conditional',
-                                       # sz='100',posSide='long', tpTriggerPx='60000', tpOrdPx='59999')
-    # 撤销策略委托订单  Cancel Algo Order
-    # result = tradeAPI.cancel_algo_order([{'algoId': '297394002194735104', 'instId': 'BTC-USDT-210409'}])
-    # 获取未完成策略委托单列表  Get Algo Order List
-    # result = tradeAPI.order_algos_list('conditional', instType='FUTURES')
-    # 获取历史策略委托单列表  Get Algo Order History
-    # result = tradeAPI.order_algos_history('conditional', 'canceled', instType='FUTURES')
+    # Get Order History (last 7 days/получить историю ордеров (последние 7 дней, фьючерс)
+    result = tradeAPI.get_orders_history('FUTURES')
+    # Get Order History (last 3 months)/получить историю ордеров (последние 3 месяца, фьючерс)
+    result = tradeAPI.orders_history_archive('FUTURES')
+    # Get Transaction Details/получить историю транзакций
+    result = tradeAPI.get_fills()
+    # Place Algo Order/пример постановки алгоритмического ордера
+    result = tradeAPI.place_algo_order('BTC-USDT-210409', 'isolated', 'buy', ordType='conditional',
+                                         sz='100',posSide='long', tpTriggerPx='60000', tpOrdPx='59999')
+    # Cancel Algo Order/отменить алгоритмический ордер
+    result = tradeAPI.cancel_algo_order([{'algoId': '297394002194735104', 'instId': 'BTC-USDT-210409'}])
+    # Get Algo Order List/получить список алгоритмических ордеров
+    result = tradeAPI.order_algos_list('conditional', instType='FUTURES')
+    # Get Algo Order History/получить историю алгоритмических ордеров
+    result = tradeAPI.order_algos_history('conditional', 'canceled', instType='FUTURES')
 
-    # 子账户API subAccount
+    # API subAccount/API субсчетoв
     subAccountAPI = SubAccount.SubAccountAPI(api_key, secret_key, passphrase, False, flag)
-    # 查询子账户的交易账户余额(适用于母账户) Query detailed balance info of Trading Account of a sub-account via the master account
-    # result = subAccountAPI.balances(subAcct='')
-    # 查询子账户转账记录(仅适用于母账户) History of sub-account transfer(applies to master accounts only)
-    # result = subAccountAPI.bills()
-    # 删除子账户APIKey(仅适用于母账户) Delete the APIkey of sub-accounts (applies to master accounts only)
-    # result = subAccountAPI.delete(pwd='', subAcct='', apiKey='')
-    # 重置子账户的APIKey(仅适用于母账户) Reset the APIkey of a sub-account(applies to master accounts only)
-    # result = subAccountAPI.reset(pwd='', subAcct='', label='', apiKey='', perm='')
-    # 创建子账户的APIKey(仅适用于母账户) Create an APIkey for a sub-account(applies to master accounts only)
-    # result = subAccountAPI.create(pwd='123456', subAcct='', label='', Passphrase='')
-    # 查看子账户列表(仅适用于母账户) View sub-account list(applies to master accounts only)
-    # result = subAccountAPI.view_list()
-    # 母账户控制子账户与子账户之间划转（仅适用于母账户）manage the transfers between sub-accounts(applies to master accounts only)
-    # result = subAccountAPI.control_transfer(ccy='', amt='', froms='', to='', fromSubAccount='', toSubAccount='')
+    # Query detailed balance info of Trading Account of a sub-account via the master account/получить подробную информацию о балансе субсчета через основной счет
+    result = subAccountAPI.balances(subAcct='')
+    # History of sub-account transfer(applies to master accounts only)/получить историю трансферов всех субсчетов (работает только с основного счета)
+    result = subAccountAPI.bills()
+    # Delete the APIkey of sub-accounts (applies to master accounts only)/удалить API ключ субсчета (работает только с основного счета)
+    result = subAccountAPI.delete(pwd='', subAcct='', apiKey='')
+    # Reset the APIkey of a sub-account(applies to master accounts only)/сбросить API ключ субсчета (работает только с основного счета)
+    result = subAccountAPI.reset(pwd='', subAcct='', label='', apiKey='', perm='')
+    # Create an APIkey for a sub-account(applies to master accounts only)/создать API ключ субсчета (работает только с основного счета)
+    result = subAccountAPI.create(pwd='123456', subAcct='', label='', Passphrase='')
+    # View sub-account list(applies to master accounts only)/получить список субсчетов (работает только с основного счета)
+    result = subAccountAPI.view_list()
+    # manage the transfers between sub-accounts(applies to master accounts only)/управление трансферами между субсчетами (работает только с основного счета)
+    result = subAccountAPI.control_transfer(ccy='', amt='', froms='', to='', fromSubAccount='', toSubAccount='')
 
-    # 系统状态API(仅适用于实盘) system status
+    # system status/статус системы
     Status = Status.StatusAPI(api_key, secret_key, passphrase, False, flag)
-    # 查看系统的升级状态
-    # result = Status.status()
+    result = Status.status()
 
+    #print/execute any of the above queries/вывести/исполнить любую из упомянутых команд
     print(json.dumps(result))
