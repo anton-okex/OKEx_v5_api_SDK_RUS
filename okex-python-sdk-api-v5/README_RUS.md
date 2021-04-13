@@ -21,7 +21,7 @@ pip install websockets==6.0
 
 2.1 Если у вас нет API ключа и других данных, то их можно получить [в вашем аккаунте на ОКЕх](https://www.okex.com/account/users/myApi) 
 
-2.2 Заполните всю необходимую информацию для аутентификации в`example.py（RestAPI）` и `websocket_example.py（WebSocketAPI）`
+2.2 Заполните всю необходимую информацию для аутентификации в`REST_examples.py（RestAPI）` и `websocket_examples.py（WebSocketAPI）`
 
 ```python 
 api_key = "ваш_API_ключ"
@@ -32,11 +32,11 @@ passphrase = "ваша_секретная_фраза"
 #### Шаг 3: Соединение с API
 
 - RestAPI
-  - Запустите `example.py`
+  - Запустите `REST_examples.py`
   - Используйте нужные вам команды
 
 - WebSocketAPI
-  - Запустите `websocket_example.py`
+  - Запустите `websocket_examples.py`
   - В зависимости от `public channel`/`private channel`/`trade`, выберете соответствующий `url`, а также нужные вам команды
 
 ```python 
