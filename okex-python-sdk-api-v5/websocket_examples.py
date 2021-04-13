@@ -362,13 +362,13 @@ passphrase = "your_passphrase/ваша_секретная_фраза"
 
 
 # WebSocket public/публичный WebSocket
-# url = "wss://ws.okex.com:8443/ws/v5/public?brokerId=9999"
+url = "wss://ws.okex.com:8443/ws/v5/public?brokerId=9999"
 
 # WebSocket private/частный WebSocket
-# url = "wss://ws.okex.com:8443/ws/v5/private?brokerId=9999"
+url = "wss://ws.okex.com:8443/ws/v5/private?brokerId=9999"
 
 '''
-channel parametres/параметры канала
+public channel parametres/параметры публичного канала
 :param channel: channel name/название канала
 :param instType: instrument type/тип инструмента
 :param instId: instrument id/id инструмента
@@ -402,7 +402,7 @@ channels = [{"channel": "index-candle1m", "instId": "BTC-USDT"}]
 channels = [{"channel": "index-tickers", "instId": "BTC-USDT"}]
 
 '''
-channel parametres/параметры канала
+private channel parametres/параметры приватного канала
 :param channel: channel name/название канала
 :param ccy: currency/валюта
 :param instType: instrument type/тип инструмента
@@ -411,51 +411,48 @@ channel parametres/параметры канала
 
 '''
 
-# 账户频道
-# channels = [{"channel": "account", "ccy": "BTC"}]
-# 持仓频道
-# channels = [{"channel": "positions", "instType": "FUTURES", "uly": "BTC-USDT", "instId": "BTC-USDT-210326"}]
-# 订单频道
-# channels = [{"channel": "orders", "instType": "FUTURES", "uly": "BTC-USD", "instId": "BTC-USD-201225"}]
-# 策略委托订单频道
-# channels = [{"channel": "orders-algo", "instType": "FUTURES", "uly": "BTC-USD", "instId": "BTC-USD-201225"}]
+# balance/получить баланс счета в BTC
+channels = [{"channel": "account", "ccy": "BTC"}]
+# positions/получить позиции счета (BTC-USD, фьючерс)
+channels = [{"channel": "positions", "instType": "FUTURES", "uly": "BTC-USDT", "instId": "BTC-USDT-210326"}]
+# orders/получить ордерa (BTC-USD, фьючерс) 
+channels = [{"channel": "orders", "instType": "FUTURES", "uly": "BTC-USD", "instId": "BTC-USD-201225"}]
+# algo orders/получить алгоритмическиe ордерa
+channels = [{"channel": "orders-algo", "instType": "FUTURES", "uly": "BTC-USD", "instId": "BTC-USD-201225"}]
 
-'''
-交易
-'''
 
-# 下单
-# trade_param = {"id": "1512", "op": "order", "args": [{"side": "buy", "instId": "BTC-USDT", "tdMode": "isolated", "ordType": "limit", "px": "19777", "sz": "1"}]}
-# 批量下单
-# trade_param = {"id": "1512", "op": "batch-orders", "args": [
-#         {"side": "buy", "instId": "BTC-USDT", "tdMode": "isolated", "ordType": "limit", "px": "19666", "sz": "1"},
-#         {"side": "buy", "instId": "BTC-USDT", "tdMode": "isolated", "ordType": "limit", "px": "19633", "sz": "1"}
-#     ]}
-# 撤单
-# trade_param = {"id": "1512", "op": "cancel-order", "args": [{"instId": "BTC-USDT", "ordId": "259424589042823169"}]}
-# 批量撤单
-# trade_param = {"id": "1512", "op": "batch-cancel-orders", "args": [
-#         {"instId": "BTC-USDT", "ordId": "259432098826694656"},
-#         {"instId": "BTC-USDT", "ordId": "259432098826694658"}
-#     ]}
-# 改单
-# trade_param = {"id": "1512", "op": "amend-order", "args": [{"instId": "BTC-USDT", "ordId": "259432767558135808", "newSz": "2"}]}
-# 批量改单
-# trade_param = {"id": "1512", "op": "batch-amend-orders", "args": [
-#         {"instId": "BTC-USDT", "ordId": "259435442492289024", "newSz": "2"},
-#         {"instId": "BTC-USDT", "ordId": "259435442496483328", "newSz": "3"}
-#     ]}
+# place order/поставить ордер
+trade_param = {"id": "1512", "op": "order", "args": [{"side": "buy", "instId": "BTC-USDT", "tdMode": "isolated", "ordType": "limit", "px": "19777", "sz": "1"}]}
+# place multiple orders/поставить несколько ордеров
+trade_param = {"id": "1512", "op": "batch-orders", "args": [
+          {"side": "buy", "instId": "BTC-USDT", "tdMode": "isolated", "ordType": "limit", "px": "19666", "sz": "1"},
+          {"side": "buy", "instId": "BTC-USDT", "tdMode": "isolated", "ordType": "limit", "px": "19633", "sz": "1"}
+      ]}
+# cancel order/oтменить ордер
+trade_param = {"id": "1512", "op": "cancel-order", "args": [{"instId": "BTC-USDT", "ordId": "259424589042823169"}]}
+# cancel multiple orders/oтменить несколько ордеров
+trade_param = {"id": "1512", "op": "batch-cancel-orders", "args": [
+          {"instId": "BTC-USDT", "ordId": "259432098826694656"},
+          {"instId": "BTC-USDT", "ordId": "259432098826694658"}
+      ]}
+# amend order/изменить ордер
+trade_param = {"id": "1512", "op": "amend-order", "args": [{"instId": "BTC-USDT", "ordId": "259432767558135808", "newSz": "2"}]}
+# amend multiple orders/изменить несколько ордеров
+trade_param = {"id": "1512", "op": "batch-amend-orders", "args": [
+          {"instId": "BTC-USDT", "ordId": "259435442492289024", "newSz": "2"},
+          {"instId": "BTC-USDT", "ordId": "259435442496483328", "newSz": "3"}
+      ]}
 
 
 loop = asyncio.get_event_loop()
 
-# 公共频道 不需要登录（行情，持仓总量，K线，标记价格，深度，资金费率等）
+# для публичных каналов - аутентификация не нужнa
 loop.run_until_complete(subscribe_without_login(url, channels))
 
-# 私有频道 需要登录（账户，持仓，订单等）
-# loop.run_until_complete(subscribe(url, api_key, passphrase, secret_key, channels))
+# для приватных каналов - необходима
+loop.run_until_complete(subscribe(url, api_key, passphrase, secret_key, channels))
 
-# 交易（下单，撤单，改单等）
+# торговля
 # loop.run_until_complete(trade(url, api_key, passphrase, secret_key, trade_param))
 
 loop.close()
