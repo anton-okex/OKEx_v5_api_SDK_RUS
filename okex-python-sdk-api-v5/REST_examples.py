@@ -18,11 +18,11 @@ if __name__ == '__main__':
     # flag = '1'  #демо-режим
     flag = '0'  #реальн
 
-    # account api/аутентификация и общие запросы по пользовательскому счетy
+    # account api/аутентификация и общие запросы по аккаунту
     accountAPI = Account.AccountAPI(api_key, secret_key, passphrase, False, flag)
-    # get balance/получить баланс счета в BTC
+    # get balance/получить баланс аккаунтa в BTC
     result = accountAPI.get_account('BTC')
-    # get positions/получить позиции счета (BTC-USD, фьючерс)
+    # get positions/получить позиции аккаунтa (BTC-USD, фьючерс)
     result = accountAPI.get_positions('FUTURES', 'BTC-USD-210402')
     # get account configuration/конфигурация аккаунта
     result = accountAPI.get_account_config()
@@ -32,13 +32,13 @@ if __name__ == '__main__':
     result = accountAPI.set_leverage(instId='BTC-USD-210402', lever='10', mgnMode='cross')
     # get maximum tradable size for instrument/получить максимально возможный размер для выбранного инструмента (фьючерс)  
     result = accountAPI.get_maximum_trade_size('BTC-USDT-210402', 'cross', 'USDT')
-    # get maximum available tradable amount/получить максимально возможную сумму для фьючерсной сделки 
+    # get maximum available tradable amount/получить максимально возможную сумму для сделки (фьючерс)
     result = accountAPI.get_max_avail_size('BTC-USDT-210402', 'isolated', 'BTC')
-    # increase/decrease margin/Увеличение/сокращение маржи
+    # increase/decrease margin/yвеличение/сокращение маржи
     result = accountAPI.Adjustment_margin('BTC-USDT-210409', 'long', 'add', '100')
-    # get leverage/получить маржу кредитного плеча  
+    # get leverage/получить маржу  
     result = accountAPI.get_leverage('BTC-USDT-210409', 'isolated')
-    # get the maximum loan of isolated MARGIN/получить максимальную ссуду изолированного кредитного плеча
+    # get the maximum loan of isolated MARGIN/получить максимальную ссуду изолированной маржи
     result = accountAPI.get_max_load('BTC-USDT', 'cross', 'BTC')
     # get fee rates/получить размер комиссий (фьючерс)
     result = accountAPI.get_fee_rates('FUTURES', '', category='1')
@@ -51,9 +51,9 @@ if __name__ == '__main__':
     fundingAPI = Funding.FundingAPI(api_key, secret_key, passphrase, False, flag)
     # get deposit address/получить адрес для депозита
     result = fundingAPI.get_deposit_address('')
-    # get balance/ получить баланс основного счета (в BTC)
+    # get balance/ получить баланс основного аккаунтa (в BTC)
     result = fundingAPI.get_balances('BTC')
-    # funds transfer/сделать трансфер средств на субсчет
+    # funds transfer/сделать трансфер средств на субаккаунт
     result = fundingAPI.funds_transfer(ccy='', amt='', type='1', froms="", to="",subAcct='')
     # withdrawal/сделать вывод средств (USDT)
     result = fundingAPI.coin_withdraw('usdt', '2', '3', '', '', '0')
@@ -68,13 +68,13 @@ if __name__ == '__main__':
 
     # market api/рыночный API
     marketAPI = Market.MarketAPI(api_key, secret_key, passphrase, False, flag)
-    # get tickers/получить ВСЕ тикеры валют на спот рынке
+    # get tickers/получить ВСЕ тикеры валют на рынке (спот)
     result = marketAPI.get_tickers('SPOT')
     # get ticker/получить тикер пары (BTC-USDT)
     result = marketAPI.get_ticker('BTC-USDT')
     # get index tickers/получить индексный тикер в паре (BTC-USDT)
     result = marketAPI.get_index_ticker('BTC', 'BTC-USD')
-    # get order book/получить информацию по OrderBook (BTC-USDT)
+    # get order book/получить информацию по книге ордеров (BTC-USDT)
     result = marketAPI.get_orderbook('BTC-USDT-210402', '400')
     # get candlesticks/получить информацию по свечам (BTC-USDT)
     result = marketAPI.get_candlesticks('BTC-USDT-210924', bar='1m')
@@ -137,15 +137,15 @@ if __name__ == '__main__':
 
     # amend order/изменить ордер
     result = tradeAPI.amend_order()
-    #   amend multiple orders/изменить несколько ордеров
+    # amend multiple orders/изменить несколько ордеров
     result = tradeAPI.amend_multiple_orders(
           [{'instId': 'BTC-USD-201225', 'cxlOnFail': 'false', 'ordId': '257551616434384896', 'newPx': '17880'},
            {'instId': 'BTC-USD-201225', 'cxlOnFail': 'false', 'ordId': '257551616652488704', 'newPx': '17882'}
            ])
 
-    # close positions/закрыть позицию
+    # close positions/закрыть позиции
     result = tradeAPI.close_positions('BTC-USDT-210409', 'isolated', 'long', '')
-    # get order details/получить информацию по конкретному ордеру
+    # get order details/получить информацию по ордеру
     result = tradeAPI.get_orders('BTC-USD-201225', '257173039968825345')
     # get order list/получить список ордеров
     result = tradeAPI.get_order_list()
@@ -165,21 +165,21 @@ if __name__ == '__main__':
     # get algo order History/получить историю алгоритмических ордеров
     result = tradeAPI.order_algos_history('conditional', 'canceled', instType='FUTURES')
 
-    # API subAccount/API субсчетoв
+    # API subAccount/API субаккаунтoв
     subAccountAPI = SubAccount.SubAccountAPI(api_key, secret_key, passphrase, False, flag)
-    # query detailed balance info of trading account of a sub-account via the master account/получить подробную информацию о балансе субсчета через основной счет
+    # query detailed balance info of trading account of a sub-account via the master account/получить подробную информацию о балансе субаккаунта через основной аккаунт
     result = subAccountAPI.balances(subAcct='')
-    # history of sub-account transfer(applies to master accounts only)/получить историю трансферов всех субсчетов (работает только с основного счета)
+    # history of sub-account transfer(applies to master accounts only)/получить историю трансферов всех субаккаунтов (работает только с основного аккаунтa)
     result = subAccountAPI.bills()
-    # delete the APIkey of sub-accounts (applies to master accounts only)/удалить API ключ субсчета (работает только с основного счета)
+    # delete the APIkey of sub-accounts (applies to master accounts only)/удалить API ключ субаккаунта (работает только с основного аккаунтa)
     result = subAccountAPI.delete(pwd='', subAcct='', apiKey='')
-    # reset the APIkey of a sub-account(applies to master accounts only)/сбросить API ключ субсчета (работает только с основного счета)
+    # reset the APIkey of a sub-account(applies to master accounts only)/сбросить API ключ субаккаунта (работает только с основного аккаунтa)
     result = subAccountAPI.reset(pwd='', subAcct='', label='', apiKey='', perm='')
-    # create an APIkey for a sub-account(applies to master accounts only)/создать API ключ субсчета (работает только с основного счета)
+    # create an APIkey for a sub-account(applies to master accounts only)/создать API ключ субаккаунта (работает только с основного аккаунтa)
     result = subAccountAPI.create(pwd='123456', subAcct='', label='', Passphrase='')
-    # view sub-account list(applies to master accounts only)/получить список субсчетов (работает только с основного счета)
+    # view sub-account list(applies to master accounts only)/получить список субаккаунтов (работает только с основного аккаунтa)
     result = subAccountAPI.view_list()
-    # manage the transfers between sub-accounts(applies to master accounts only)/управление трансферами между субсчетами (работает только с основного счета)
+    # manage the transfers between sub-accounts(applies to master accounts only)/управление трансферами между субаккаунтами (работает только с основного аккаунтa)
     result = subAccountAPI.control_transfer(ccy='', amt='', froms='', to='', fromSubAccount='', toSubAccount='')
 
     # system status/статус системы
