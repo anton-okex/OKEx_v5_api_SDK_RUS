@@ -1,5 +1,8 @@
 # Unofficial (неофициальный) OKEx V5 API SDK
 
+This is unofficial SDK for the OKEx v5 API (Unified Account) that also contains russian comments and guides.
+
+Это неофициальный SDK для API OKEx v5 (Unified Account), который также содержит комментарии и руководства на русском языке.
 
 ## OKEx Open API V5 Documentation/Документация
 
