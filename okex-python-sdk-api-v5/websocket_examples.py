@@ -402,12 +402,12 @@ channels = [{"channel": "index-candle1m", "instId": "BTC-USDT"}]
 channels = [{"channel": "index-tickers", "instId": "BTC-USDT"}]
 
 '''
-私有频道
-:param channel: 频道名
-:param ccy: 币种
-:param instType: 产品类型
-:param uly: 合约标的指数
-:param instId: 产品ID
+channel parametres/параметры канала
+:param channel: channel name/название канала
+:param ccy: currency/валюта
+:param instType: instrument type/тип инструмента
+:param uly: base contract index/базовый индекс контракта
+:param instId: instrument id/id инструмента
 
 '''
 
