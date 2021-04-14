@@ -6,11 +6,11 @@ This is unofficial SDK for the OKEx v5 API (Unified Account) that also contains 
 
 ## OKEx Open API V5 Документация / Documentation
 
- OKEX API официальная документация/Official OKEx V5 API documentation: (англ. язык): [OKEx API](https://www.okex.com/docs-v5/en/#market-maker-program)
+ OKEX API официальная документация / Official OKEx V5 API documentation: (англ. язык): [OKEx API](https://www.okex.com/docs-v5/en/#market-maker-program)
 
-Полный гайд по OKEX API V5 (англ. язык)/Complete guide to OKEx’s API V5: [OKEx API V5 Guide](https://www.okex.com/academy/en/complete-guide-to-okex-api-v5-upgrade)
+Полный гайд по OKEX API V5 (англ. язык) / Complete guide to OKEx’s API V5: [OKEx API V5 Guide](https://www.okex.com/academy/en/complete-guide-to-okex-api-v5-upgrade)
 
-Другой неофициальный OKEX v5 API SDK на англ и китайском языках/Other unofficial SDK for the OKEx V5 API in English and Chinese: [OKEx API V5 SDK](https://github.com/jane-cloud/Open-API-SDK-V5)
+Другой неофициальный OKEX v5 API SDK на англ и китайском языках / Other unofficial SDK for the OKEx V5 API in English and Chinese: [OKEx API V5 SDK](https://github.com/jane-cloud/Open-API-SDK-V5)
 
 ## Языки/Languages: Python, Java, PHP
 
