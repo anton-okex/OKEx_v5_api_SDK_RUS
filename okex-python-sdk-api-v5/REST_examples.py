@@ -11,9 +11,9 @@ import okex.status_api as Status
 import json
 
 if __name__ == '__main__':
-    api_key = "your_API_key/ваш_API_ключ"
-    secret_key = "your_secret_key/ваш_секретный_ключ"
-    passphrase = "your_passphrase/ваша_секретная_фраза"
+    api_key = "ваш_API_ключ/your_API_key"
+    secret_key = "ваш_секретный_ключ/your_secret_key"
+    passphrase = "ваша_секретная_фраза/your_passphrase"
     # параметр flag используется для переключения между демо и реальным режимом
     # flag = '1'  #демо-режим
     flag = '0'  #реальны
