@@ -1,5 +1,5 @@
-# Code examples for the OKEx V5 API (websockets)
 # Примеры команд для OKEx V5 API (websockets)
+# Code examples for the OKEx V5 API (websockets)
 
 import asyncio
 import websockets
@@ -11,13 +11,13 @@ import zlib
 import datetime
 import time
 
-# format the timestamp/форматирование timestamp
+# форматирование timestamp / format the timestamp
 def get_timestamp():
     now = datetime.datetime.now()
     t = now.isoformat("T", "milliseconds")
     return t + "Z"
 
-# server time/время сервер 
+# время серверa / server time
 def get_server_time():
     url = "https://www.okex.com/api/v5/public/time"
     response = requests.get(url)
@@ -29,7 +29,7 @@ def get_server_time():
 def get_local_timestamp():
     return int(time.time())
 
-# login/аутентификация
+# аутентификация / login
 def login_params(timestamp, api_key, passphrase, secret_key):
     message = timestamp + 'GET' + '/users/self/verify'
 
@@ -44,7 +44,7 @@ def login_params(timestamp, api_key, passphrase, secret_key):
     login_str = json.dumps(login_param)
     return login_str
 
-# bids & asks data/данные по bids & asks
+# данные по bids & asks / bids & asks data
 def partial(res):
     data_obj = res['data'][0]
     bids = data_obj['bids']
@@ -52,7 +52,7 @@ def partial(res):
     instrument_id = res['arg']['instId']
     return bids, asks, instrument_id
 
-#modify & update bids/изменение bids
+# изменение bids / modify & update bids
 def update_bids(res, bids_p):
     bids_u = res['data'][0]['bids']
     for i in bids_u:
@@ -74,7 +74,7 @@ def update_bids(res, bids_p):
         # print('合并后的bids为：' + str(bids_p) + '，档数为：' + str(len(bids_p)))
     return bids_p
 
-#modify & update asks/изменение asks
+# изменение asks / modify & update asks
 def update_asks(res, asks_p):
     # 获取增量asks数据
     asks_u = res['data'][0]['asks']
@@ -103,7 +103,7 @@ def sort_num(n):
     else:
         return float(n)
 
-# get the bids & asks file/получить список bids & asks
+# получить список bids & asks / get the bids & asks file
 def check(bids, asks):
     bids_l = []
     bid_l = []
@@ -157,7 +157,7 @@ def change(num_old):
     return out
 
 
-# subscribe channels without login/подписаться на каналы без аутентификации
+# подписаться на каналы без аутентификации / subscribe channels without login
 async def subscribe_without_login(url, channels):
     l = []
     while True:
@@ -198,7 +198,7 @@ async def subscribe_without_login(url, channels):
                                 d['asks_p'] = asks_p
                                 l.append(d)
 
-                                # checksum/контрольные суммы
+                                # контрольные суммы / checksum
                                 checksum = res['data'][0]['checksum']
                                 check_num = check(bids_p, asks_p)
                                 if check_num == checksum:
@@ -206,7 +206,7 @@ async def subscribe_without_login(url, channels):
                                 else:
                                     print("Проверка_checksum：False，повторная_попытка...")
 
-                                    # cancel subscription/отменить подписку
+                                    # отменить подписку / cancel subscription
                                     await unsubscribe_without_login(url, channels)
                                     async with websockets.connect(url) as ws:
                                         sub_param = {"op": "subscribe", "args": channels}
@@ -217,13 +217,13 @@ async def subscribe_without_login(url, channels):
                             elif res['action'] == 'update':
                                 for j in l:
                                     if res['arg']['instId'] == j['instrument_id']:
-                                        # full data/получить полные данные
+                                        # получить полные данные / full data
                                         bids_p = j['bids_p']
                                         asks_p = j['asks_p']
                                         bids_p = update_bids(res, bids_p)
                                         asks_p = update_asks(res, asks_p)
 
-                                        # checksum/контрольные суммы
+                                        # контрольные суммы / checksum
                                         checksum = res['data'][0]['checksum']
                                         # print('checksum/контрольные суммы：' + str(checksum))
                                         check_num = check(bids_p, asks_p)
@@ -233,7 +233,7 @@ async def subscribe_without_login(url, channels):
                                         else:
                                             print("Проверка_checksum：False，повторная_попыткa...")
 
-                                            # cancel subscription/отменить подписку
+                                            # отменить подписку / cancel subscription
                                             await unsubscribe_without_login(url, channels)
                                             async with websockets.connect(url) as ws:
                                                 sub_param = {"op": "subscribe", "args": channels}
@@ -245,12 +245,12 @@ async def subscribe_without_login(url, channels):
             continue
 
 
-# subscribe channels with login/подписаться на каналы с аутентификацией
+# подписаться на каналы с аутентификацией / subscribe channels with login
 async def subscribe(url, api_key, passphrase, secret_key, channels):
     while True:
         try:
             async with websockets.connect(url) as ws:
-                # login/аутентификация
+                # аутентификация / login
                 timestamp = str(get_local_timestamp())
                 login_str = login_params(timestamp, api_key, passphrase, secret_key)
                 await ws.send(login_str)
@@ -258,7 +258,7 @@ async def subscribe(url, api_key, passphrase, secret_key, channels):
                 res = await ws.recv()
                 print(res)
 
-                # subscribe/подписаться
+                # подписаться / subscribe
                 sub_param = {"op": "subscribe", "args": channels}
                 sub_str = json.dumps(sub_param)
                 await ws.send(sub_str)
@@ -284,7 +284,7 @@ async def subscribe(url, api_key, passphrase, secret_key, channels):
             continue
 
 
-# trade/торговый API
+# торговый API / trade
 async def trade(url, api_key, passphrase, secret_key, trade_param):
     while True:
         try:
@@ -322,10 +322,10 @@ async def trade(url, api_key, passphrase, secret_key, trade_param):
             continue
 
 
-# unsubscribe channels/отменить подписку
+# отменить подписку / unsubscribe channels
 async def unsubscribe(url, api_key, passphrase, secret_key, channels):
     async with websockets.connect(url) as ws:
-        # login/аутентификация
+        # аутентификация / login
         timestamp = str(get_local_timestamp())
         login_str = login_params(timestamp, api_key, passphrase, secret_key)
         await ws.send(login_str)
@@ -334,7 +334,7 @@ async def unsubscribe(url, api_key, passphrase, secret_key, channels):
         res = await ws.recv()
         print(f"recv: {res}")
 
-        # unsubscribe/отменить подписку
+        # отменить подписку / unsubscribe
         sub_param = {"op": "unsubscribe", "args": channels}
         sub_str = json.dumps(sub_param)
         await ws.send(sub_str)
@@ -344,7 +344,7 @@ async def unsubscribe(url, api_key, passphrase, secret_key, channels):
         print(f"recv: {res}")
 
 
-# unsubscribe channels/отменить подписку
+# отменить подписку / unsubscribe channels
 async def unsubscribe_without_login(url, channels):
     async with websockets.connect(url) as ws:
         sub_param = {"op": "unsubscribe", "args": channels}
@@ -361,10 +361,10 @@ secret_key = "your_secret_key/ваш_секретный_ключ"
 passphrase = "your_passphrase/ваша_секретная_фраза"
 
 
-# WebSocket public/публичный WebSocket
+# публичный WebSocket / WebSocket public
 url = "wss://ws.okex.com:8443/ws/v5/public?brokerId=9999"
 
-# WebSocket private/частный WebSocket
+# приватный WebSocket / WebSocket private
 url = "wss://ws.okex.com:8443/ws/v5/private?brokerId=9999"
 
 '''
@@ -376,29 +376,29 @@ public channel parametres/параметры публичного канала
 
 '''
 
-# instrument/получить информацию по инструменту (фьючерс)
+# получить информацию по инструменту (фьючерс) / instrument
 channels = [{"channel": "instruments", "instType": "FUTURES"}]
-# tickers/получить информацию по тикеру
+# получить информацию по тикеру / tickers
 channels = [{"channel": "tickers", "instId": "BTC-USD-210326"}]
-# open-interest/получить информацию по открытым позициям 
+# получить информацию по открытым позициям / open-interest
 channels = [{"channel": "open-interest", "instId": "BTC-USD-210326"}]
-# candlesticks/получить информацию по свечам 
+# получить информацию по свечам / candlesticks
 channels = [{"channel": "candle1m", "instId": "BTC-USD-210326"}]
-# trades/получить информацию по сделкам
+# получить информацию по сделкам / trades
 channels = [{"channel": "trades", "instId": "BTC-USD-201225"}]
-# estimated price/получить цену исполнения 
+# получить цену исполнения / estimated price
 channels = [{"channel": "estimated-price", "instType": "FUTURES", "uly": "BTC-USD"}]
-# mark price/получить информацию по цене отметки инструмента
+# получить информацию по цене отметки инструмента / mark price
 channels = [{"channel": "mark-price", "instId": "BTC-USDT-210326"}]
-# price limit/получить цену лимита
+# получить цену лимита / price limit
 channels = [{"channel": "price-limit", "instId": "BTC-USD-201225"}]
-# options data/получить рыночные данные по опционам
+# получить рыночные данные по опционам / options data
 channels = [{"channel": "opt-summary", "uly": "BTC-USD"}]
-# funding rate/получить информацию по текущей ставке
+# получить информацию по текущей ставке / funding rate
 channels = [{"channel": "funding-rate", "instId": "BTC-USD-SWAP"}]
-# index candlesticks/получить информацию по свечам (индекс)
+# получить информацию по свечам (индекс) / index candlesticks
 channels = [{"channel": "index-candle1m", "instId": "BTC-USDT"}]
-# index tickers/получить индексный тикер в паре (BTC-USDT)
+# получить индексный тикер в паре (BTC-USDT) / index tickers
 channels = [{"channel": "index-tickers", "instId": "BTC-USDT"}]
 
 '''
@@ -411,33 +411,33 @@ private channel parametres/параметры приватного канала
 
 '''
 
-# balance/получить баланс счета в BTC
+# получить баланс счета в BTC / balance
 channels = [{"channel": "account", "ccy": "BTC"}]
-# positions/получить позиции счета (BTC-USD, фьючерс)
+# получить позиции счета (BTC-USD, фьючерс) / positions
 channels = [{"channel": "positions", "instType": "FUTURES", "uly": "BTC-USDT", "instId": "BTC-USDT-210326"}]
-# orders/получить ордерa (BTC-USD, фьючерс) 
+# получить ордерa (BTC-USD, фьючерс) / orders
 channels = [{"channel": "orders", "instType": "FUTURES", "uly": "BTC-USD", "instId": "BTC-USD-201225"}]
-# algo orders/получить алгоритмическиe ордерa
+# получить алгоритмическиe ордерa / algo orders
 channels = [{"channel": "orders-algo", "instType": "FUTURES", "uly": "BTC-USD", "instId": "BTC-USD-201225"}]
 
 
-# place order/поставить ордер
+# поставить ордер / place order
 trade_param = {"id": "1512", "op": "order", "args": [{"side": "buy", "instId": "BTC-USDT", "tdMode": "isolated", "ordType": "limit", "px": "19777", "sz": "1"}]}
-# place multiple orders/поставить несколько ордеров
+# поставить несколько ордеров / place multiple orders
 trade_param = {"id": "1512", "op": "batch-orders", "args": [
           {"side": "buy", "instId": "BTC-USDT", "tdMode": "isolated", "ordType": "limit", "px": "19666", "sz": "1"},
           {"side": "buy", "instId": "BTC-USDT", "tdMode": "isolated", "ordType": "limit", "px": "19633", "sz": "1"}
       ]}
-# cancel order/oтменить ордер
+# oтменить ордер / cancel order
 trade_param = {"id": "1512", "op": "cancel-order", "args": [{"instId": "BTC-USDT", "ordId": "259424589042823169"}]}
-# cancel multiple orders/oтменить несколько ордеров
+# oтменить несколько ордеров / cancel multiple orders
 trade_param = {"id": "1512", "op": "batch-cancel-orders", "args": [
           {"instId": "BTC-USDT", "ordId": "259432098826694656"},
           {"instId": "BTC-USDT", "ordId": "259432098826694658"}
       ]}
-# amend order/изменить ордер
+# изменить ордер / amend order
 trade_param = {"id": "1512", "op": "amend-order", "args": [{"instId": "BTC-USDT", "ordId": "259432767558135808", "newSz": "2"}]}
-# amend multiple orders/изменить несколько ордеров
+# изменить несколько ордеров / amend multiple orders
 trade_param = {"id": "1512", "op": "batch-amend-orders", "args": [
           {"instId": "BTC-USDT", "ordId": "259435442492289024", "newSz": "2"},
           {"instId": "BTC-USDT", "ordId": "259435442496483328", "newSz": "3"}
