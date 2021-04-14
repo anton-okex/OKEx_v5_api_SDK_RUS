@@ -25,7 +25,7 @@ This is unofficial SDK for the OKEx v5 API (Unified Account) that also contains 
 
 Телеграм группа по OKEX API на aнглийском языке / OKEx API Telegram English Group: [@OKExAPI](https://t.me/OKExAPI)
 
-Телеграм bot по OKEX API на русском языке / OKEx API support bot Russian: [@V5_API_support_bot](https://t.me/V5_API_support_bot)
+Телеграм группа по OKEX support на русском языке / OKEx Telegram community group Russian: [@OKEx Community Group RUS](https://t.me/okexofficial_ru)
 
 Телеграм группа объявлений по OKEX API на англ языке / OKEx API Announcements English: [@OKEx_APIannouncements](https://t.me/OKEx_APIannouncements)
 
